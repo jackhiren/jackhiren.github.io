@@ -1,36 +1,127 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sample Page</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <main class="card">
-    <h1>Welcome to My Sample Page</h1>
-    <p>Click a button below to change the page color theme.</p>
-
-    <div class="buttons">
-      <button class="btn blue" onclick="setTheme('blue')">Blue</button>
-      <button class="btn green" onclick="setTheme('green')">Green</button>
-      <button class="btn red" onclick="setTheme('red')">Red</button>
-      <button class="btn purple" onclick="setTheme('purple')">Purple</button>
-      <button class="btn orange" onclick="setTheme('orange')">Orange</button>
-      <button class="btn dark" onclick="setTheme('dark')">Dark</button>
-    </div>
-  </main>
-
-  <script>
-    function setTheme(name) {
-      document.body.setAttribute('data-theme', name);
-      try { localStorage.setItem('theme', name); } catch (e) {}
-    }
-
-    try {
-      var saved = localStorage.getItem('theme');
-      if (saved) setTheme(saved);
-    } catch (e) {}
-  </script>
-</body>
-</html>
+<!doctype html><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><style>body{margin:0}</style><title>Aetherfield</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: full-width bands, 1120px column; the Track-Model-Report-Act loop is the signature */
+:root{--bg:#f3f6f4;--surface:#fff;--fg:#10261f;--muted:#4c625a;--line:#cfdcd5;--accent:#0b6b52;--on-accent:#fff;--signal:#c8ee5a;--deep:#0e2a22;--on-deep:#eef6f1;
+--display:"Bricolage Grotesque",system-ui,sans-serif;--body:"Instrument Sans",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,monospace}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0b1613;--surface:#12221d;--fg:#e7f0eb;--muted:#9db4aa;--line:#25403600;--line:#254036;--accent:#6fd3ad;--on-accent:#062018;--deep:#163a2f;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0b1613;--surface:#12221d;--fg:#e7f0eb;--muted:#9db4aa;--line:#254036;--accent:#6fd3ad;--on-accent:#062018;--deep:#163a2f;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:16px/1.6 var(--body)}
+.wrap{max-width:1152px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+h1,h2,h3{font-family:var(--display);line-height:1.1;margin:0;text-wrap:balance;letter-spacing:-.015em}
+h1{font-size:clamp(2.3rem,6vw,4.2rem)}h2{font-size:clamp(1.6rem,3.4vw,2.4rem)}h3{font-size:1.25rem}
+p{margin:0;max-width:65ch}
+header{position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);border-bottom:1px solid var(--line);z-index:9}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
+header .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 20px;padding-block:12px}
+.logo{font:700 1.35rem var(--display);text-decoration:none}
+nav{display:flex;flex-wrap:wrap;align-items:center;gap:6px 18px}
+nav a{text-decoration:none;font-weight:500;font-size:.95rem}
+nav a[aria-current]{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:6px;text-decoration-color:var(--accent)}
+.btn{display:inline-block;background:var(--accent);color:var(--on-accent);border:1.5px solid var(--accent);border-radius:4px;padding:10px 18px;font:600 .95rem var(--body);text-decoration:none;cursor:pointer}
+nav .btn{padding:6px 14px}
+.btn.alt{background:transparent;color:var(--fg);border-color:var(--fg)}
+.row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+section{padding-block:56px;border-bottom:1px solid var(--line)}
+.stack{display:flex;flex-direction:column;gap:20px;align-items:flex-start}
+.lede{font-size:1.15rem;color:var(--muted)}
+.meta{font:500 .78rem var(--mono);color:var(--muted)}
+.split{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:40px;align-items:center}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;width:100%}
+.grid.four{grid-template-columns:repeat(4,minmax(0,1fr))}
+.item{border-top:2px solid var(--fg);padding-top:14px;display:flex;flex-direction:column;gap:8px}
+.item a.more{margin-top:auto;font-weight:600;color:var(--accent)}
+.art{aspect-ratio:16/9;width:100%;border-radius:4px;background:repeating-radial-gradient(circle at var(--x,30%) var(--y,120%),transparent 0 17px,var(--signal) 17px 19px),var(--deep)}
+.loop{background:var(--deep);color:var(--on-deep);border-radius:6px;padding:24px;display:flex;flex-direction:column;gap:4px}
+.loop button{all:unset;cursor:pointer;display:grid;grid-template-columns:44px 1fr;gap:2px 12px;padding:14px 8px;border-top:1px solid #ffffff33}
+.loop button:focus-visible{outline:3px solid var(--signal)}
+.loop .n{font:500 .8rem var(--mono);color:var(--signal)}
+.loop b{font:700 1.5rem var(--display)}
+.loop span.d{grid-column:2;opacity:.85}
+.loop button[aria-pressed="true"]{background:var(--signal);color:#10261f}
+.loop button[aria-pressed="true"] .n{color:#10261f}
+.band{background:var(--deep);color:var(--on-deep)}
+.band .meta{color:var(--on-deep);opacity:.8}
+.band .btn{background:var(--signal);border-color:var(--signal);color:#10261f}
+.band .btn.alt{background:transparent;color:var(--on-deep);border-color:var(--on-deep)}
+blockquote{margin:0;font:500 clamp(1.5rem,3.4vw,2.3rem)/1.25 var(--display);max-width:26ch}
+.list{width:100%;list-style:none;margin:0;padding:0}
+.list li{border-top:1px solid var(--line);padding:16px 0}
+.job{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;align-items:center}
+.job>div{min-width:0;flex:1 1 280px}
+.team li{display:grid;grid-template-columns:1fr 1.3fr 1.3fr;gap:4px 16px}
+.team li span{min-width:0;overflow-wrap:anywhere}
+.prose{max-width:68ch;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+.prose h2{font-size:1.5rem;margin-top:20px}
+form{display:flex;flex-direction:column;gap:12px;width:100%;max-width:420px}
+label{display:flex;flex-direction:column;gap:4px;font-weight:600;font-size:.9rem}
+input{font:16px var(--body);padding:10px 12px;border:1.5px solid var(--line);border-radius:4px;background:var(--surface);color:var(--fg);width:100%}
+form .btn{align-self:flex-start}
+footer .wrap{padding-block:32px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px}
+@media(max-width:860px){.grid,.grid.four{grid-template-columns:repeat(2,minmax(0,1fr))}.split{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:560px){.grid,.grid.four{grid-template-columns:minmax(0,1fr)}.team li{grid-template-columns:minmax(0,1fr)}}
+</style>
+<header><div class="wrap"><a class="logo" href="#home">Aetherfield</a><nav aria-label="Main"><a href="#product">Product</a><a href="#journal">Journal</a><a href="#about">About</a><a href="#careers">Careers</a><a class="btn" href="#get-started">Get started</a></nav></div></header>
+<main id="main"></main>
+<footer><div class="wrap"><a class="logo" href="#home">Aetherfield</a><nav aria-label="Footer"><a href="#product">Product</a><a href="#journal">Journal</a><a href="#about">About</a><a href="#careers">Careers</a><a href="#get-started">Get started</a></nav><p class="meta">© 2025 · All rights reserved<br>Design prototype with fictional sample content. Forms do not send anything.</p></div></footer>
+<script>
+const $=(h)=>h.join('');
+const wrap=(h,c='')=>`<section class="${c}"><div class="wrap stack">${h}</div></section>`;
+const tag="Track impact, reduce emissions, and accelerate progress—with clarity and confidence.";
+const mission="Climate action starts with better information. We help organizations turn complex data into measurable, meaningful change.";
+const demo='<a class="btn" href="#get-started">Request a demo</a>';
+const cta=()=>wrap(`<h2>Ready to operationalize your sustainability goals?</h2>${demo}`,'band');
+const loopData=[["Track","Emissions, energy, and waste across your value chain"],["Model","Forecast performance and goal alignment"],["Report","Generate ESG disclosures, automate frameworks"],["Act","Surface insights and operational next steps"]];
+const loop=()=>`<div class="loop">${$(loopData.map((s,i)=>`<button type="button" aria-pressed="${i==0}"><span class="n">00${i+1}</span><b>${s[0]}</b><span class="d">${s[1]}</span></button>`))}</div>`;
+const arts=[
+["How to Build a Climate-Ready Data Stack","Insights","4 min","A practical guide for sustainability teams on integrating emissions, waste, and energy data into modern workflows."],
+["Sustainability Isn’t a Side Project: Making Impact Operational","Strategy","7 min","Why climate goals belong in your core roadmap—not just in the annual ESG report."],
+["Inside the Aetherfield Model: How We Turn Data Into Action","Insights","5 min","A behind-the-scenes look at our platform logic, system architecture, and sustainability reasoning."],
+["From Spreadsheets to Systems: The Evolution of Climate Reporting","Tooling","6 min","Why legacy tools aren’t enough—and what the next generation of reporting looks like."],
+["Carbon Accounting: Myths, Models, and Must-Haves","Tooling","4 min","Debunking common assumptions and offering a framework for getting it right."],
+["Seeing Clearly: Designing Feedback Loops for Sustainable Growth","Strategy","4 min","Building responsive systems that keep sustainability strategy adaptive and actionable."]];
+const cards=(list)=>`<div class="grid">${$(list.map(a=>{const i=arts.indexOf(a);return `<article class="item"><div class="art" style="--x:${(i*37)%100}%;--y:${i%2?-20:120}%" aria-hidden="true"></div><p class="meta">${a[1]} · ${a[2]}</p><h3><a href="#article-${i+1}">${a[0]}</a></h3><p>${a[3]}</p></article>`}))}</div>`;
+const values=()=>wrap(`<h2>Our values</h2><div class="grid">${$([["Clarity drives action","We believe better decisions start with better data—measured, visible, and trusted."],["Sustainability is a systems problem","We build tools that help teams connect the dots between operations, impact, and accountability."],["Progress over perfection","We support real-world momentum—helping organizations move from ambition to measurable change."]].map(v=>`<div class="item"><h3>${v[0]}</h3><p>${v[1]}</p></div>`))}</div>`);
+const jobs=[
+["data-scientist","Data Scientist","Full-time · Denver, CO","Help build the intelligence layer for climate action. You’ll turn complex sustainability data into clear, actionable insights for enterprise teams."],
+["ux-designer","UX Designer","Contract · San Francisco, CA",""],
+["product-manager","Product Manager","Part-time · Seattle, WA","Shape the tools that drive climate intelligence. You’ll lead cross-functional teams to build thoughtful, scalable solutions for sustainability-forward organizations."]];
+const team=[["Eunji Park","Founder","e.park"],["John McClelland","Director of Technology","jmcclelland"],["Al Gorithm","Senior Systems Architect","a.gorithm"],["Cassandra Query","Head of Data Platforms","c.query"],["Sue Logic","Principal Software Engineer","s.logic"],["Dash Bordman","Product Manager","d.bordman"],["Greta Watt","Director of Climate Strategy","g.watt"],["Gail Force","Environmental Risk Analyst","g.force"],["Polly Nation","UX Designer","p.nation"],["Will O’Watt","Clean Energy Solutions Manager","w.owatt"],["Lana Terra","Earth Systems Research","l.terra"],["Ella Vation","Earth Systems Researcher","e.vation"],["Phil Scope","Lifecycle Assessment Lead","p.scope"]];
+const form=(id,fields,button,done)=>`<form id="${id}" data-done="${done}">${$(fields.map(f=>`<label>${f[0]}<input id="${id}-${f[1]}" type="${f[2]}" required></label>`))}<button class="btn">${button}</button><p role="status"></p></form>`;
+const subscribe=()=>wrap(`<h2>Subscribe to Aetherfield Journal</h2>${form('news',[["Email address","email","email"]],'Sign up to newsletter','Prototype only. No address was saved or sent.')}`);
+const pages={
+home:()=>`<section><div class="wrap split"><div class="stack"><h1>Sustainability insights, built for business</h1><p class="lede">${tag}</p><div class="row">${demo}<a class="btn alt" href="#product">Explore the platform</a></div></div>${loop()}</div></section>`
++wrap(`<h2>Our mission</h2><p class="lede">${mission}</p><a class="btn alt" href="#about">Meet the team</a>`)+values()
++wrap(`<p class="meta">Sample testimonial</p><blockquote>“We finally moved past spreadsheets and guesswork. Now we have real data to guide real decisions.”</blockquote><p class="meta">Elliot Williams · Head of Sustainability, Flux Materials</p>`,'band')
++wrap(`<p class="meta">Sample case study</p><h2>Why Acme Inc chose Aetherfield</h2><p>With fragmented data and growing reporting pressure, Acme turned to Aetherfield to streamline their ESG workflows. The result? Faster decisions, fewer spreadsheets, and 34% more coverage.</p><div class="row"><a class="btn alt" href="#case-study">Read case study</a><a class="btn alt" href="#case-study">Watch case study</a></div>`)
++wrap(`<h2>From the journal</h2>${cards(arts.slice(0,3))}<a class="btn alt" href="#journal">View all articles</a>`)+cta(),
+product:()=>`<section><div class="wrap split"><div class="stack"><h1>Everything you need to measure, model, and act on sustainability</h1><p class="lede">${tag}</p><div class="row">${demo}<button type="button" class="btn alt" data-scroll="features">Explore features</button></div></div>${loop()}</div></section>`
++wrap(`<h2 id="features" style="scroll-margin-top:140px">Built for clarity</h2><p class="lede">We believe better decisions start with better data—measured, visible, and trusted.</p><h2>Designed for action</h2><p class="lede">We support real-world momentum—helping organizations move from ambition to measurable change.</p>`)+cta(),
+journal:()=>wrap(`<h1>Journal</h1><p class="lede">${mission}</p><h2>Latest articles</h2>${cards(arts)}`)+subscribe(),
+about:()=>wrap(`<h1>About Aetherfield</h1><p class="lede">At Aetherfield, we build software that empowers companies to lead with climate accountability. Our platform helps sustainability and operations teams make sense of complex environmental data—transforming emissions, waste, and energy metrics into measurable, meaningful action. We’re a mission-driven team of technologists, designers, and scientists working to accelerate the shift toward a low-carbon future.</p>`)
++wrap(`<h2>Our mission</h2><p class="lede">${mission}</p>`)+values()
++wrap(`<h2>Founder’s story</h2><p>Eunji founded Aetherfield with one goal: to help companies take climate action without waiting for a perfect plan. With a background in environmental systems and software design, she’s spent the past decade building tools that turn impact goals into real-world outcomes. She still insists on biking to every investor meeting.</p>`)
++wrap(`<h2>Meet the team</h2><ul class="list team"><li class="meta" aria-hidden="true"><span>Name</span><span>Title</span><span>Contact</span></li>${$(team.map(t=>`<li><b>${t[0]}</b><span>${t[1]}</span><span class="meta">${t[2]}@aetherfield.com</span></li>`))}</ul>`)
++wrap(`<h2>We’re hiring! Want to join the team?</h2><a class="btn" href="#careers">View open roles</a>`,'band'),
+careers:()=>wrap(`<h1>Careers at Aetherfield</h1><p class="lede">Ready to help build the future of climate intelligence?</p>`)
++wrap(`<h2>Company benefits</h2><div class="grid">${$(["Competitive salary and equity options","Flexible, hybrid work environment","Generous PTO and paid volunteer days","Annual sustainability stipend","Team offsites and climate-focused retreats","A mission-first culture that values clarity, impact, and integrity"].map(b=>`<div class="item"><h3>${b}</h3></div>`))}</div>`)
++wrap(`<h2>Open roles</h2><ul class="list">${$(jobs.map(j=>`<li class="job"><div><h3>${j[1]}</h3><p class="meta">${j[2]}</p><p>${j[3]}</p></div><a class="btn alt" href="#role-${j[0]}">View role</a></li>`))}</ul>`)
++wrap(`<h2>Don’t see your role available? Apply for an open application!</h2><a class="btn" href="#apply">Open application</a>`,'band'),
+'get-started':()=>wrap(`<h1>Request a demo</h1><p class="lede">${tag}</p>${form('demo',[["Full name","name","text"],["Work email","email","email"],["Company","company","text"]],'Request a demo','Prototype only. Your request was not sent.')}`),
+apply:()=>wrap(`<a href="#careers">← Back to Careers</a><h1>Open application</h1>${form('app',[["Full name","name","text"],["Email address","email","email"]],'Apply now','Prototype only. Your application was not sent.')}`),
+'case-study':()=>wrap(`<a href="#home">← Back to Home</a><p class="meta">Sample case study</p><h1>Why Acme Inc chose Aetherfield</h1><p class="lede">With fragmented data and growing reporting pressure, Acme turned to Aetherfield to streamline their ESG workflows. The result? Faster decisions, fewer spreadsheets, and 34% more coverage.</p><p class="meta">The full case study and video are not included in the design text.</p>`)+cta()
+};
+jobs.forEach(j=>pages['role-'+j[0]]=()=>wrap(`<a href="#careers">← Back to Careers</a><h1>${j[1]}</h1><p class="meta">${j[2]}</p>${j[3]?`<p class="lede">${j[3]}</p>`:''}${j[0]=='data-scientist'?`<h2>About the role</h2><p>As a Data Scientist at Aetherfield, you’ll help shape the analytical engine behind our platform. You’ll collaborate with product and engineering teams to design models that interpret environmental impact, forecast future trends, and uncover actionable insights for our customers. Your work will directly influence how companies plan, report, and act on their sustainability strategies.</p><h2>Requirements</h2><ul>${$(["3+ years of experience in data science or applied analytics (Python, SQL, etc.)","Experience working with climate, sustainability, or supply chain datasets is a plus","Strong foundation in statistics and data modeling","Ability to communicate complex insights clearly to both technical and non-technical teams","Curiosity, clarity, and care in how you approach messy data","Passion for solving real-world problems with purpose and precision"].map(r=>`<li>${r}</li>`))}</ul>`:'<p>The full role description is not included in the design text.</p>'}<a class="btn" href="#apply">Apply now</a>`));
+const body=[["","Climate action is only as strong as the data that informs it. But most data stacks weren’t designed with emissions, supply chains, or climate modeling in mind. Teams are often stuck retrofitting existing systems or relying on brittle workarounds to generate insights. It’s time to rethink our infrastructure—starting with the foundation."],["Built for Another Era","Most data infrastructures were built to optimize for sales, user growth, or cost—not carbon. This creates friction when sustainability teams try to source emissions data from systems that weren’t designed to capture it. Without foundational visibility, even basic reporting becomes a manual, error-prone task. The result? Delays, duplications, and disconnects."],["Bridging the Gaps","Emissions data lives everywhere—and nowhere. From procurement software to building sensors, critical signals are often siloed across vendors, formats, or departments. The first step to a climate-ready stack is connection: mapping where relevant data lives, how it’s structured, and where the friction points are in accessing it consistently."],["Stack With Strategy","A modern climate stack isn’t just a bundle of tools—it’s an integrated system that mirrors how your business actually operates. This means prioritizing interoperability, aligning metrics across platforms, and investing in foundational data governance. Tools alone won’t solve emissions blind spots—strategy will."],["Bake in Flexibility","Regulatory frameworks, emissions factors, and supplier data are constantly evolving. Your data stack should too. That means designing for modularity, version control, and extensibility. Future-proofing your system is less about predicting what’s next and more about building with change in mind."],["From Stack to Story","At the end of the day, data infrastructure is only valuable if it drives action. A climate-ready stack enables teams to monitor progress, identify trade-offs, and make informed decisions at speed. With the right foundations in place, sustainability becomes more than a report—it becomes a capability."]];
+arts.forEach((a,i)=>pages['article-'+(i+1)]=()=>`<section><article class="wrap"><div class="prose"><a href="#journal">← Back to Journal</a><p class="meta">${a[1]} · ${a[2]}</p><h1>${a[0]}</h1><p class="lede">${a[3]}</p>${i==0?'<p class="meta">Published May 7, 2028 · Author Lana Terra</p><div class="art" aria-hidden="true"></div>'+$(body.map(b=>(b[0]?`<h2>${b[0]}</h2>`:'')+`<p>${b[1]}</p>`)):'<p>The body of this article is not included in the design text.</p>'}</div></article></section>`+wrap(`<h2>Recent articles</h2>${cards(arts.filter((x,k)=>k!=i).slice(0,3))}`)+subscribe());
+const main=document.getElementById('main');
+function show(){const k=location.hash.slice(1),key=pages[k]?k:'home';main.innerHTML=pages[key]();
+document.querySelectorAll('header nav a:not(.btn)').forEach(a=>{const s=a.hash.slice(1);(key==s||(s=='journal'&&key.startsWith('article'))||(s=='careers'&&(key.startsWith('role')||key=='apply')))?a.setAttribute('aria-current','page'):a.removeAttribute('aria-current')});window.scrollTo(0,0)}
+main.addEventListener('click',e=>{const s=e.target.closest('[data-scroll]');if(s)document.getElementById(s.dataset.scroll).scrollIntoView();const b=e.target.closest('.loop button');if(b)b.parentNode.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x==b))});
+main.addEventListener('submit',e=>{e.preventDefault();const f=e.target;f.querySelector('[role=status]').textContent=f.dataset.done;f.reset()});
+addEventListener('hashchange',show);show();
+</script>
